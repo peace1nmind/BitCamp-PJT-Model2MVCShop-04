@@ -65,7 +65,7 @@ public class ProductDaoImpl implements ProductDao {
 	}
 
 	@Override
-	public int updateTranCode(Product product) throws Exception {
+	public int updateProTranCode(Product product) throws Exception {
 
 		return sqlSession.update("ProductMapper.updateTranCode", product);
 	}

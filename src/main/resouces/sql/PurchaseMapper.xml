@@ -6,6 +6,82 @@
  					
 <mapper namespace="PurchaseMapper">
 	
+	<!-- DB Column과 VO의 Field 맵핑 -->
+	<resultMap type="purchase" id="purchaseSelectMap">
+		<result property="tranNo" 			column="tran_no" 			javaType="INTEGER"/>
+		<result property="purchaseProd" 	column="prod_no" 			javaType="INTEGER"/>
+		<result property="buyer" 			column="buyer_id" 			javaType="VARCHAR"/>
+		<result property="paymentOption" 	column="payment_option" 	javaType="CHAR"/>
+		<result property="receiverName" 	column="receiver_name" 		javaType="VARCHAR"/>
+		<result property="receiverPhone" 	column="receiver_phone" 	javaType="VARCHAR"/>
+		<result property="dlvyAddr" 		column="dlvy_addr" 			javaType="VARCHAR"/>
+		<result property="dlvyRequest" 		column="dlvy_request" 		javaType="VARCHAR"/>
+		<result property="tranCode" 		column="tran_status_code" 	javaType="CHAR"/>
+		<result property="orderDate" 		column="order_date" 		javaType="DATE"/>
+		<result property="dlvyDate" 		column="dlvy_date" 			javaType="DATE"/>
+	</resultMap>
 	
+	
+	<!-- selectPurchase: 구매정보 조회 -->
+	<select id="selectPurchase"
+			parameterType="int"
+			resultMap="purchaseSelectMap">
+	
+		SELECT
+		tran_no, prod_no, buyer_id, 
+		payment_option, 
+		receiver_name, receiver_phone, 
+		dlvy_addr, dlvy_request, 
+		tran_status_code, 
+		order_date, dlvy_date 
+		FROM transaction
+		WHERE tran_no = #{tranNo} 
+			
+	</select>
+	
+	
+	<!-- selectPurchaseByProd: prodNo로 구매정보 조회 -->
+	<select id="selectPurchaseByProd"
+			parameterMap="int"
+			resultMap="purchaseSelectMap">
+	
+		SELECT
+		tran_no, prod_no, buyer_id, 
+		payment_option, 
+		receiver_name, receiver_phone, 
+		dlvy_addr, dlvy_request, 
+		tran_status_code, 
+		order_date, dlvy_date 
+		FROM transaction
+		WHERE prod_no = #{prodNo} 
+			
+	</select>
+	
+	
+	<!-- insertPurchae: 구매 -->
+	<insert id="insertPurchase"
+			parameterType="purchase">
+	
+		INSERT INTO transaction
+		VALUES (seq_transaction_tran_no.NEXTVAL,
+				${purchase.purchaseProd.prodNo:INTEGER},
+				${purchase.buyer.userId},
+				<if test="paymentOption == null">null</if>
+				<if test="paymnetOption != null">#{paymentOption}</if>,
+				<if test="receiverName == null">null</if>
+				<if test="receiverName != null">#{receiverName}</if>,
+				<if test="receiverPhone == null">null</if>
+				<if test="receiverPhone != null">#{receiverPhone}</if>,
+				<if test="dlvyAddr == null">null</if>
+				<if test="dlvyAddr != null">#{dlvyAddr}</if>
+				<if test="dlvyRequest == null">null</if>
+				<if test="dlvyRequest != null">#{dlvyRequest}</if>,
+				tran_status_code = '2',
+				SYSDATE,
+				<if test="dlvyDate == null">null</if>
+				<if test="dlvyDate != null">#{dlvyDate}</if>)
+		
+			
+	</insert>
 	
 </mapper>

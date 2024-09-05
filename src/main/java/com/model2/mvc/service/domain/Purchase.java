@@ -4,7 +4,13 @@ package com.model2.mvc.service.domain;
 import java.sql.Date;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
 import com.model2.mvc.service.TranCodeMapper;
+import com.model2.mvc.service.product.ProductDao;
+import com.model2.mvc.service.product.ProductService;
+import com.model2.mvc.service.user.UserDao;
 
 public class Purchase {
 
@@ -24,6 +30,25 @@ public class Purchase {
 	private String dlvyDate;		// DLVY_DATE			배송 희망 일자
 	//														(배송이 완료되면 배송된 날짜로 변경하기)
 	
+	/* 04 리펙토링 추가항목 */
+	@Autowired
+	@Qualifier("productDaoImpl")
+	private ProductDao productDao;
+//	private int purchaseProdNo;
+	
+	@Autowired
+	@Qualifier("UserDaoImpl")
+	private UserDao userDao;
+//	private String buyerId;
+	
+	public void setProductDao(ProductDao productDao) {
+		this.productDao = productDao;
+	}
+
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
+
 	// Constructor
 	public Purchase() {
 	}
@@ -53,6 +78,17 @@ public class Purchase {
 	public void setPurchaseProd(Product purchaseProd) {
 		this.purchaseProd = purchaseProd;
 	}
+	
+	public void setPurchaseProd(int prodNo) {
+		
+		try {
+			this.purchaseProd = productDao.selectProduct(prodNo);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+	}
 
 	public User getBuyer() {
 		return buyer;
@@ -60,6 +96,17 @@ public class Purchase {
 
 	public void setBuyer(User buyer) {
 		this.buyer = buyer;
+	}
+	
+	public void setBuyer(String buyerId) {
+		
+		try {
+			this.buyer = userDao.getUser(buyerId);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
 	}
 
 	public String getPaymentOption() {

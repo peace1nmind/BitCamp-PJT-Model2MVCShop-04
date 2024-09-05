@@ -29,7 +29,7 @@ public interface ProductDao {
 	
 	// tranCode 변경
 	// service에서 tranCode 변경하여 product 넣게끔
-	public int updateTranCode(Product product) throws Exception;
+	public int updateProTranCode(Product product) throws Exception;
 	
 }
 // class end

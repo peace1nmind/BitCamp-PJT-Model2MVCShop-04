@@ -63,7 +63,7 @@ public class ProductServiceImpl implements ProductService {
 		Product product = productDao.selectProduct(prodNo);
 		product.setProTranCode(proTranCode);
 		
-		productDao.updateTranCode(product);
+		productDao.updateProTranCode(product);
 	}
 
 }
