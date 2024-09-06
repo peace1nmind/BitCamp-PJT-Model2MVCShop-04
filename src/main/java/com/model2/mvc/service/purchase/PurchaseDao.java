@@ -20,11 +20,21 @@ public interface PurchaseDao {
 	// 유저 구매이력 조회 (구매완료~배송중)
 	public List<Purchase> selectPurchaseList(Search search, String buyerId) throws Exception;
 	
+	// 구매이력 (구매완료~배송중) count
+	public int countPurchaseList(String buyerId) throws Exception;
+	
 	// 유저 구매이력 조회 (배송완료~)
 	public List<Purchase> selectPurchaseHistoryList(Search search, String buyerId) throws Exception;
 	
+	// 구매이력 (배송완료~) count
+	public int countPurchaseHistoryList(String buyerId) throws Exception;
+	
 	// 판매완료 상품리스트 조회 (관리자)
+	// RowBounds 사용하기
 	public List<Purchase> selectSaleList(Search search) throws Exception;
+	
+	// 판매완료 상품리스트 count
+	public int countSaleList() throws Exception;
 	
 	// 구매정보 수정
 	public void updatePurchase(Purchase purchase) throws Exception;

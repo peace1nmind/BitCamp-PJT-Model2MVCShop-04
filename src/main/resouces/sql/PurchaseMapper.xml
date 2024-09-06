@@ -84,4 +84,141 @@
 			
 	</insert>
 	
+	
+	<!-- selectPurchaseList: 구매이력 조회 (구매완료~배송중) -->
+	<!-- RowBouns 사용해보기 RowBounds(offset, limit) -->
+	<select id="selectPurchaseList"
+			resultMap="purchaseSelectMap">
+	
+		SELECT * 
+		FROM(	SELECT inner_table.*, ROWNUM AS row_seq		
+				FROM(	SELECT * 
+						FROM transaction
+						WHERE buyer_id = ${map.buyerId}
+						AND tran_status_code BETWEEN 2 AND 3
+						ORDER BY order_date DESC
+					) inner_talbe
+				WHERE ROWNUM &lt;= ${map.search.endRowNum}
+			)
+		WHERE row_seq BETWEEN ${map.search.startRowNum} AND ${map.search.endRowNum}
+				
+	</select>
+	
+	
+	<!-- countPurchaseList -->
+	<select id="countPurchaseList"
+			resultType="int">
+	
+		SELECT COUNT(*)
+		FROM (SELECT * 
+			FROM transaction
+			WHERE buyer_id = #{buyerId}
+			AND tran_status_code BETWEEN 2 AND 3
+			)
+			
+	</select>
+	
+	
+	<!-- selectPurchaseHistoryList: 구매이력 조회 (배송완료~) -->
+	<select id="selectPurchaseHistoryList"
+			resultMap="purchaseSelectMap">
+	
+		SELECT * 
+		FROM(	SELECT inner_table.*, ROWNUM AS row_seq		
+				FROM(	SELECT * 
+						FROM transaction
+						WHERE buyer_id = ${map.buyerId}
+						AND tran_status_code &gt;= 4
+						ORDER BY order_date DESC
+					) inner_talbe
+				WHERE ROWNUM &lt;= ${map.search.endRowNum}
+			)
+		WHERE row_seq BETWEEN ${map.search.startRowNum} AND ${map.search.endRowNum}
+				
+	</select>
+	
+	
+	<!-- countPurchaseHistoryList -->
+	<select id="countPurchaseHistoryList"
+			resultType="int">
+	
+		SELECT COUNT(*)
+		FROM (	SELECT * 
+				FROM transaction
+				WHERE buyer_id = ${map.buyerId}
+				AND tran_status_code &gt;= 4
+			 )
+			
+	</select>
+	
+	
+	<!-- selectSaleList: 판매완료 상품리스트 조회 (관리자) -->
+	<!-- RowBounds 사용 -->
+	<select id="selectSaleList"
+			parameterType="search"
+			resultMap="purchaseSelectMap">
+	
+		SELECT * 
+		FROM transaction
+		WHERE tran_status_code &gt;= 2
+		ORDER BY tran_status_code, order_date DESC, tran_no
+			
+	</select>
+	
+	
+	<!-- countSaleList -->
+	<select id="countSaleList"
+			resultType="int">
+		
+		SELECT COUNT(*)
+		FROM (	SELECT * 
+				FROM transaction
+				WHERE tran_status_code &gt;= 2
+			 )
+	
+	</select>
+	
+	
+	<!-- updatePurchase: 구매정보 수정 -->
+	<update id="updatePurchase"
+			parameterType="purchase">
+	
+		UPDATE transaction
+		
+		<set>
+			payment_option = <if test="paymentOption == null">null</if>
+							 <if test="paymentOption != null">#{paymentOption}</if>,
+			
+			receiver_name = <if test="receiverName == null">null</if>
+							<if test="receiverName != null">#{receiverName}</if>,
+			
+			receiver_phone = <if test="receiverPhone == null">null</if>
+							 <if test="receiverPhone != null">#{receiverPhon}</if>,
+			
+			dlvy_addr = <if test="dlvyAddr == null">null</if>
+						<if test="dlvyAddr != null">#{dlvyAddr}</if>,
+			
+			dlvy_request = <if test="dlvyRequest == null">null</if>
+						   <if test="dlvyRequest != null">#{dlvyRequest}</if>,
+			
+			dlvy_date = <if test="dlvyDate == null">null</if>
+						<if test="dlvyDate != null">#{dlvyDate:Date}</if>,
+		</set>
+		
+		WHERE tran_no = #{tranNo}
+				
+	</update>
+	
+	
+	<!-- updateTranStatusCode: tranCode 수정 -->
+	<update id="updateTranStatusCode"
+			parameterType="purchase">
+		
+		UPDATE transaction
+		SET tran_status_code = #{tranCode}
+		WHERE tran_no = #{tranNo}
+				
+	</update>
+	
+	
 </mapper>
