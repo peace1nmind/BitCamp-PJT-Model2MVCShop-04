@@ -25,6 +25,7 @@
 	
 	<!-- selectPurchase: 구매정보 조회 -->
 	<select id="selectPurchase"
+			parameterType="java.lang.Integer"
 			resultMap="purchaseSelectMap">
 	
 		SELECT
@@ -93,20 +94,20 @@
 		FROM(	SELECT inner_table.*, ROWNUM AS row_seq		
 				FROM(	SELECT * 
 						FROM transaction
-						WHERE buyer_id = ${map.buyerId}
+						WHERE buyer_id = #{buyerId}
 						AND tran_status_code BETWEEN 2 AND 3
 						ORDER BY order_date DESC
 					) inner_talbe
-				WHERE ROWNUM &lt;= ${map.search.endRowNum}
+				WHERE ROWNUM &lt;= #{search.endRowNum}
 			)
-		WHERE row_seq BETWEEN ${map.search.startRowNum} AND ${map.search.endRowNum}
+		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
 				
 	</select>
 	
 	
 	<!-- countPurchaseList -->
 	<select id="countPurchaseList"
-			resultType="int">
+			resultType="java.lang.Integer">
 	
 		SELECT COUNT(*)
 		FROM (SELECT * 
@@ -139,7 +140,7 @@
 	
 	<!-- countPurchaseHistoryList -->
 	<select id="countPurchaseHistoryList"
-			resultType="int">
+			resultType="java.lang.Integer">
 	
 		SELECT COUNT(*)
 		FROM (	SELECT * 
@@ -167,7 +168,7 @@
 	
 	<!-- countSaleList -->
 	<select id="countSaleList"
-			resultType="int">
+			resultType="java.lang.Integer">
 		
 		SELECT COUNT(*)
 		FROM (	SELECT * 
