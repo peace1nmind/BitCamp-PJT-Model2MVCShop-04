@@ -9,8 +9,8 @@
 	<!-- DB Column과 VO의 Field 맵핑 -->
 	<!-- TypeHandler가 필요하다 -->
 	<resultMap type="purchase" id="purchaseSelectMap">
-		<result property="tranNo" 			column="tran_no" 			jdbcType="INTEGER"/>
-		<result property="purchaseProdNo" 	column="prod_no" 			jdbcType="INTEGER"/>
+		<result property="tranNo" 			column="tran_no" 			jdbcType="NUMBER"/>
+		<result property="purchaseProdNo" 	column="prod_no" 			jdbcType="NUMBER"/>
 		<result property="buyerId" 			column="buyer_id" 			jdbcType="VARCHAR"/>	
 		<result property="paymentOption" 	column="payment_option" 	jdbcType="CHAR"/>
 		<result property="receiverName" 	column="receiver_name" 		jdbcType="VARCHAR"/>
@@ -25,7 +25,6 @@
 	
 	<!-- selectPurchase: 구매정보 조회 -->
 	<select id="selectPurchase"
-			parameterType="int"
 			resultMap="purchaseSelectMap">
 	
 		SELECT
@@ -43,7 +42,6 @@
 	
 	<!-- selectPurchaseByProd: prodNo로 구매정보 조회 -->
 	<select id="selectPurchaseByProd"
-			parameterMap="int"
 			resultMap="purchaseSelectMap">
 	
 		SELECT
