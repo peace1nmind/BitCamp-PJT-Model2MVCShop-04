@@ -79,16 +79,16 @@ public class Purchase {
 		this.purchaseProd = purchaseProd;
 	}
 	
-	public void setPurchaseProd(int prodNo) {
-		
-		try {
-			this.purchaseProd = productDao.selectProduct(prodNo);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			
-		}
-	}
+//	public void setPurchaseProd(int prodNo) {
+//		
+//		try {
+//			this.purchaseProd = productDao.selectProduct(prodNo);
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			
+//		}
+//	}
 
 	public User getBuyer() {
 		return buyer;
@@ -98,16 +98,16 @@ public class Purchase {
 		this.buyer = buyer;
 	}
 	
-	public void setBuyer(String buyerId) {
-		
-		try {
-			this.buyer = userDao.getUser(buyerId);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			
-		}
-	}
+//	public void setBuyer(String buyerId) {
+//		
+//		try {
+//			this.buyer = userDao.getUser(buyerId);
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			
+//		}
+//	}
 
 	public String getPaymentOption() {
 		return paymentOption;

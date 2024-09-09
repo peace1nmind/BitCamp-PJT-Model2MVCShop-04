@@ -24,7 +24,7 @@ public class ProductServiceTest {
 	@Qualifier("productServiceImpl")
 	private ProductService productService;
 
-	//@Test
+	@Test
 	public void testGetProductList() throws Exception {
 		
 		System.out.println("\n==============================");

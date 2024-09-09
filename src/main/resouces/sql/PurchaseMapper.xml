@@ -7,18 +7,19 @@
 <mapper namespace="PurchaseMapper">
 	
 	<!-- DB Column과 VO의 Field 맵핑 -->
+	<!-- TypeHandler가 필요하다 -->
 	<resultMap type="purchase" id="purchaseSelectMap">
-		<result property="tranNo" 			column="tran_no" 			javaType="INTEGER"/>
-		<result property="purchaseProd" 	column="prod_no" 			javaType="INTEGER"/>
-		<result property="buyer" 			column="buyer_id" 			javaType="VARCHAR"/>
-		<result property="paymentOption" 	column="payment_option" 	javaType="CHAR"/>
-		<result property="receiverName" 	column="receiver_name" 		javaType="VARCHAR"/>
-		<result property="receiverPhone" 	column="receiver_phone" 	javaType="VARCHAR"/>
-		<result property="dlvyAddr" 		column="dlvy_addr" 			javaType="VARCHAR"/>
-		<result property="dlvyRequest" 		column="dlvy_request" 		javaType="VARCHAR"/>
-		<result property="tranCode" 		column="tran_status_code" 	javaType="CHAR"/>
-		<result property="orderDate" 		column="order_date" 		javaType="DATE"/>
-		<result property="dlvyDate" 		column="dlvy_date" 			javaType="DATE"/>
+		<result property="tranNo" 			column="tran_no" 			jdbcType="INTEGER"/>
+		<result property="purchaseProdNo" 	column="prod_no" 			jdbcType="INTEGER"/>
+		<result property="buyerId" 			column="buyer_id" 			jdbcType="VARCHAR"/>	
+		<result property="paymentOption" 	column="payment_option" 	jdbcType="CHAR"/>
+		<result property="receiverName" 	column="receiver_name" 		jdbcType="VARCHAR"/>
+		<result property="receiverPhone" 	column="receiver_phone" 	jdbcType="VARCHAR"/>
+		<result property="dlvyAddr" 		column="dlvy_addr" 			jdbcType="VARCHAR"/>
+		<result property="dlvyRequest" 		column="dlvy_request" 		jdbcType="VARCHAR"/>
+		<result property="tranCode" 		column="tran_status_code" 	jdbcType="CHAR"/>
+		<result property="orderDate" 		column="order_date" 		jdbcType="DATE"/>
+		<result property="dlvyDate" 		column="dlvy_date" 			jdbcType="DATE"/>
 	</resultMap>
 	
 	
